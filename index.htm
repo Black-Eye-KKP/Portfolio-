@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explorer's Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital@0;1&family=Special+Elite&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #1a1208;
+    --aged: #f5ede0;
+    --parchment: #efe5d0;
+    --warm-brown: #7a4f2a;
+    --gold: #c9973a;
+    --rust: #8b3a1e;
+    --sage: #5a7255;
+    --stamp-blue: #2a3d6b;
+    --shadow: rgba(60,30,10,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    background-color: #c8b89a;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(180,140,80,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(120,80,40,0.2) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(26,18,8,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--gold);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Special Elite', cursive;
+    color: var(--gold);
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--parchment);
+    text-decoration: none;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* decorative map lines */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(122,79,42,0.08) 50px),
+      repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(122,79,42,0.08) 50px);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1100px; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: center;
+    position: relative;
+  }
+
+  /* polaroid */
+  .polaroid-wrap {
+    display: flex; justify-content: center;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-12px) rotate(-1.5deg); }
+  }
+  .polaroid {
+    background: #fdfaf5;
+    padding: 16px 16px 52px;
+    box-shadow: 6px 8px 28px var(--shadow), 0 0 0 1px rgba(180,140,80,0.3);
+    position: relative;
+    max-width: 300px;
+    width: 100%;
+  }
+  .polaroid img {
+    width: 100%; aspect-ratio: 1; object-fit: cover;
+    display: block;
+    filter: sepia(20%) contrast(1.05);
+  }
+  .polaroid-caption {
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--warm-brown);
+    padding-top: 10px;
+    letter-spacing: 0.04em;
+  }
+  .polaroid::after {
+    content: '';
+    position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 14px;
+    background: rgba(201,151,58,0.55);
+    border-radius: 2px;
+  }
+
+  /* hero text */
+  .hero-text { padding: 1rem 0; }
+
+  .hero-kicker {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .hero-kicker::before, .hero-kicker::after {
+    content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.6;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--warm-brown);
+    display: block;
+  }
+
+  .hero-title {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-quote {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    color: var(--stamp-blue);
+    border-left: 3px solid var(--gold);
+    padding: 0.5rem 1rem;
+    margin: 1.5rem 0;
+    background: rgba(255,255,255,0.3);
+    border-radius: 0 4px 4px 0;
+    line-height: 1.6;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #3a2a18;
+    margin-bottom: 2rem;
+  }
+
+  .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.8rem;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--gold);
+    border: 2px solid var(--ink);
+  }
+  .btn-primary:hover {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 2px solid var(--ink);
+  }
+  .btn-outline:hover {
+    background: var(--ink);
+    color: var(--parchment);
+    transform: translateY(-2px);
+  }
+
+  /* stamp badges */
+  .stamps {
+    display: flex; gap: 0.75rem; margin-top: 2rem; flex-wrap: wrap;
+  }
+  .stamp {
+    border: 2px dashed var(--rust);
+    padding: 0.3rem 0.7rem;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rust);
+    transform: rotate(-1.5deg);
+    background: rgba(255,255,255,0.25);
+  }
+  .stamp:nth-child(2) { transform: rotate(1deg); }
+  .stamp:nth-child(3) { transform: rotate(-0.5deg); }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 6rem 2rem; }
+
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .section-tag {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--ink);
+    position: relative;
+    display: inline-block;
+  }
+  .section-title::after {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-top: 0.5rem;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--parchment); position: relative; }
+  #about::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-card {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(201,151,58,0.4);
+    border-radius: 2px;
+    padding: 2rem;
+    box-shadow: 4px 4px 16px var(--shadow);
+    position: relative;
+  }
+  .about-card::before {
+    content: '✦';
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    background: var(--parchment); padding: 0 8px;
+    color: var(--gold); font-size: 1rem;
+  }
+
+  .about-text { font-size: 1.05rem; line-height: 1.9; color: #3a2a18; }
+  .about-text p { margin-bottom: 1.2rem; }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .fact-list { list-style: none; }
+  .fact-list li {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(122,79,42,0.2);
+    font-size: 0.95rem;
+    color: #3a2a18;
+  }
+  .fact-list li:last-child { border-bottom: none; }
+  .fact-icon {
+    font-size: 1.2rem; flex-shrink: 0; width: 28px; text-align: center;
+    margin-top: 2px;
+  }
+  .fact-label {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-brown);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ─── SKILLS ─── */
+  #skills { background: var(--aged); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .skill-card {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(201,151,58,0.35);
+    border-radius: 2px;
+    padding: 1.75rem;
+    box-shadow: 3px 3px 12px var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--rust));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 6px 10px 28px var(--shadow);
+  }
+  .skill-card:hover::after { transform: scaleX(1); }
+
+  .skill-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+  .skill-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .skill-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #5a4030;
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .skill-tag {
+    background: rgba(122,79,42,0.12);
+    border: 1px solid rgba(122,79,42,0.25);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--warm-brown);
+    text-transform: uppercase;
+  }
+
+  /* ─── TRAVELS ─── */
+  #travels { background: var(--ink); position: relative; overflow: hidden; }
+  #travels::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='500' height='500' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  }
+
+  #travels .section-tag { color: var(--gold); }
+  #travels .section-title { color: var(--parchment); }
+
+  .travels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .travel-card {
+    border: 1px solid rgba(201,151,58,0.3);
+    border-radius: 2px;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.04);
+    transition: all 0.3s;
+    position: relative;
+  }
+  .travel-card:hover {
+    background: rgba(201,151,58,0.1);
+    border-color: var(--gold);
+    transform: translateY(-4px);
+  }
+
+  .travel-flag { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+  .travel-place {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--parchment);
+    margin-bottom: 0.25rem;
+  }
+  .travel-country {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .travel-note {
+    font-size: 0.88rem;
+    color: rgba(245,237,224,0.65);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* postcard quote */
+  .postcard {
+    margin-top: 4rem;
+    background: #fdfaf5;
+    max-width: 640px;
+    margin-left: auto; margin-right: auto;
+    padding: 2.5rem;
+    border-radius: 2px;
+    box-shadow: 8px 8px 32px rgba(0,0,0,0.4), -2px -2px 0 var(--gold) inset;
+    position: relative;
+    transform: rotate(-1deg);
+  }
+  .postcard-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: var(--stamp-blue);
+    line-height: 1.7;
+  }
+  .postcard-sig {
+    margin-top: 1rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--warm-brown);
+    text-align: right;
+  }
+  .postcard-stamp {
+    position: absolute; top: 1rem; right: 1rem;
+    width: 60px; height: 72px;
+    border: 2px solid var(--stamp-blue);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.45rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--stamp-blue);
+    text-align: center;
+    padding: 4px;
+  }
+  .postcard-stamp::before {
+    content: '✈';
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--parchment); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-form-wrap {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(201,151,58,0.35);
+    border-radius: 2px;
+    padding: 2.5rem;
+    box-shadow: 4px 4px 16px var(--shadow);
+  }
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--ink);
+  }
+
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label {
+    display: block;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-brown);
+    margin-bottom: 0.4rem;
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(122,79,42,0.35);
+    border-radius: 2px;
+    background: rgba(245,237,224,0.6);
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+  }
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,151,58,0.15);
+  }
+  .form-textarea { resize: vertical; min-height: 120px; }
+
+  .contact-info { }
+  .contact-info-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(201,151,58,0.25);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .contact-item:hover {
+    background: rgba(255,255,255,0.75);
+    border-color: var(--gold);
+    transform: translateX(4px);
+  }
+  .contact-item-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .contact-item-label {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-brown);
+    margin-bottom: 3px;
+  }
+  .contact-item-value {
+    font-size: 0.95rem;
+    color: var(--ink);
+    font-weight: 500;
+    word-break: break-all;
+  }
+  .contact-item-value a {
+    color: var(--stamp-blue);
+    text-decoration: none;
+  }
+  .contact-item-value a:hover { text-decoration: underline; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 3px solid var(--gold);
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .footer-tag {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,237,224,0.5);
+    margin-bottom: 2rem;
+  }
+  .footer-links {
+    display: flex; justify-content: center; gap: 2rem;
+    list-style: none;
+    margin-bottom: 2rem;
+  }
+  .footer-links a {
+    color: rgba(245,237,224,0.7);
+    text-decoration: none;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy {
+    font-size: 0.8rem;
+    color: rgba(245,237,224,0.35);
+    font-style: italic;
+  }
+
+  /* ─── COMPASS DECORATION ─── */
+  .compass-deco {
+    width: 120px; height: 120px;
+    margin: 0 auto 1.5rem;
+    opacity: 0.15;
+    animation: spin-slow 40s linear infinite;
+  }
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+
+  /* ─── DIVIDER ─── */
+  .ornament-divider {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--gold);
+    letter-spacing: 1rem;
+    opacity: 0.6;
+    margin: 0;
+    user-select: none;
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hero-inner, .about-grid, .contact-grid {
+      grid-template-columns: 1fr;
+    }
+    .polaroid-wrap { order: -1; }
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.7rem; }
+  }
+
+  /* highlight */
+  mark {
+    background: linear-gradient(120deg, rgba(201,151,58,0.35) 0%, rgba(201,151,58,0.15) 100%);
+    border-radius: 2px; padding: 0 2px;
+    color: inherit;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">✦ Explorer</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#travels">Travels</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="polaroid-wrap">
+      <div class="polaroid">
+        <!-- Replace the src below with your actual photo path -->
+        <img src="Image.png" alt="Profile Photo" onerror="this.style.background='#d4c5a9';this.style.minHeight='268px';this.removeAttribute('src')">
+        <div class="polaroid-caption">Bagan, Myanmar ✦ 2025</div>
+      </div>
+    </div>
+
+    <div class="hero-text reveal">
+      <div class="hero-kicker">Personal Portfolio</div>
+      <h1 class="hero-name">
+        Kishor Kumar Paul <em>Here</em>
+      </h1>
+      <div class="hero-title">Traveller · Creator · Explorer</div>
+
+      <blockquote class="hero-quote">
+        "The best stories begin where the map ends.<br>Go. Explore. Live."
+      </blockquote>
+
+      <p class="hero-desc">
+        A curious soul navigating the world — one temple, one conversation, and one story at a time.
+        Based in , venturing everywhere.
+      </p>
+
+      <div class="btn-group">
+        <a href="#contact" class="btn btn-primary">Send a Letter</a>
+        <a href="#skills" class="btn btn-outline">My Work</a>
+      </div>
+
+      <div class="stamps">
+        <span class="stamp">📍 Bangladesh</span>
+        <span class="stamp">🌏 India</span>
+        <span class="stamp">📖 Student</span>
+        <span class="stamp">✈ Wanderer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-tag">◈ The Story</span>
+      <h2 class="section-title">About Me</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <div class="about-text">
+          <p>
+            Hello! I'm <strong>Kishor Kumar Paul</strong>, a passionate explorer and creative professional from Bangladesh. I believe that every journey — whether across continents or across disciplines — shapes who we become.
+          </p>
+          <p>
+            My adventures have taken me to ancient temples of Bagan and beyond, always with a camera in hand and curiosity in heart. When I'm not traveling, I bring that same explorer's mindset to my work.
+          </p>
+          <p>
+            I specialize in <mark>Ancient History Research</mark> and love working on projects that challenge conventions and tell meaningful stories. Currently open to collaborations and new opportunities.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-card reveal">
+        <ul class="fact-list">
+          <li>
+            <span class="fact-icon">🗺️</span>
+            <div>
+              <span class="fact-label">Current Base</span>
+              Tamil Nadu, India
+            </div>
+          </li>
+          <li>
+            <span class="fact-icon">🏛️</span>
+            <div>
+              <span class="fact-label">Education</span>
+              B.E. in Computer Science And Engineering <br><br>
+              KPR Institute of Engineering and Technology
+            </div>
+          </li>
+          <li>
+            <span class="fact-icon">💼</span>
+            <div>
+              <span class="fact-label">Occupation</span>
+              Student
+            </div>
+          </li>
+          <li>
+            <span class="fact-icon">🌏</span>
+            <div>
+              <span class="fact-label">Countries Visited</span>
+              India
+            </div>
+          </li>
+      <!--    <li>
+            <span class="fact-icon">🎧</span>
+            <div>
+              <span class="fact-label">Currently Listening</span>
+              [Your Fav Artist/Genre]
+            </div>
+          </li>
+          <li>
+            <span class="fact-icon">📖</span>
+            <div>
+              <span class="fact-label">Currently Reading</span>
+              [Your Current Book]
+            </div>
+          </li>  -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-tag">◈ Expertise</span>
+      <h2 class="section-title">Skills & Tools</h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">Design & Creativity</div>
+        <p class="skill-desc">Creating visual narratives and compelling designs that communicate across cultures and contexts.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">Photoshop</span>
+      <!--    <span class="skill-tag">Illustrator</span>
+          <span class="skill-tag">UI/UX</span> -->
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">💻</div>
+        <div class="skill-name">Technology</div>
+        <p class="skill-desc">Building digital experiences with modern tools and frameworks that power the modern web.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">HTML/CSS</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">C</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">📷</div>
+        <div class="skill-name">Photography</div>
+        <p class="skill-desc">Capturing moments and stories through the lens — from ancient temples to candid street life.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Travel</span>
+          <span class="skill-tag">Portrait</span>
+      <!--    <span class="skill-tag">Lightroom</span> -->
+          <span class="skill-tag">Storytelling</span>
+        </div>
+      </div>
+
+  <!--    <div class="skill-card reveal">
+        <div class="skill-icon">✍️</div>
+        <div class="skill-name">Writing</div>
+        <p class="skill-desc">Crafting words that inspire, inform, and transport readers to worlds they haven't yet visited.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Blog</span>
+          <span class="skill-tag">Travel Writing</span>
+          <span class="skill-tag">Copywriting</span>
+          <span class="skill-tag">Storytelling</span>
+        </div>
+      </div>  -->
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🗣️</div>
+        <div class="skill-name">Communication</div>
+        <p class="skill-desc">Bridging ideas and people with clarity — adapting language and approach to every audience.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Public Speaking</span>
+          <span class="skill-tag">Bengali</span>
+          <span class="skill-tag">English</span>
+          <span class="skill-tag">Hindi</span>
+          <span class="skill-tag">Teamwork</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🧭</div>
+        <div class="skill-name">Leadership</div>
+        <p class="skill-desc">Navigating challenges and guiding teams forward — like reading the stars when maps run out.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Project Management</span>
+          <span class="skill-tag">Strategy</span>
+          <span class="skill-tag">Adaptability</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAVELS -->
+<section id="travels">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-tag">◈ The Map</span>
+      <h2 class="section-title">Places I've Wandered</h2>
+    </div>
+
+    <div class="travels-grid reveal">
+      <div class="travel-card">
+        <span class="travel-flag">IN</span>
+        <div class="travel-place">Tamil Nadu</div>
+        <div class="travel-country">India</div>
+        <div class="travel-note">City of temples, good people & warmth welcome</div>
+      </div>
+      <div class="travel-card">
+        <span class="travel-flag">BD</span>
+        <div class="travel-place">Khulna</div>
+        <div class="travel-country">Bangladesh</div>
+        <div class="travel-note">City of vibrant markets, delicious food, and friendly people.</div>
+      </div>
+      <!-- Add more travel cards below -->
+      <div class="travel-card">
+        <span class="travel-flag">🌏</span>
+        <div class="travel-place">Next Destination</div>
+        <div class="travel-country">....</div>
+        <div class="travel-note">The adventure is ongoing. The next pin on the map is going to be planned soon…</div>
+      </div>
+    </div>
+
+    <!-- Postcard -->
+    <div class="postcard reveal">
+      <div class="postcard-stamp">||India || Post 24628</div>
+      <div class="postcard-text">
+        Dear future me,<br><br>
+        The world is bigger than your room.<br>
+        Get out. Get lost.<br>
+        Find yourself in places you've never heard of.<br>
+        The best stories begin where the map ends.<br><br>
+        Go. Explore. Live.
+      </div>
+      <div class="postcard-sig">— Now ✦</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-tag">◈ Say Hello</span>
+      <h2 class="section-title">Get In Touch</h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-form-wrap reveal">
+        <div class="form-title">Send a Message</div>
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="hello@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Tell me about your project, idea, or just say hello…"></textarea>
+        </div>
+        <!-- Replace action with your form handler (Formspree, etc.) -->
+        <a href="mailto:your.email@example.com" class="btn btn-primary" style="display:inline-block;width:100%;text-align:center;margin-top:0.5rem;">
+          ✉ Send Message
+        </a>
+      </div>
+
+      <div class="contact-info reveal">
+        <div class="contact-info-title">Find Me Here</div>
+
+        <div class="contact-item">
+          <span class="contact-item-icon">📧</span>
+          <div>
+            <span class="contact-item-label">Email</span>
+            <div class="contact-item-value">
+              <a href="mailto:your.email@example.com">kishorkumarpaul25@gmail.com</a>
+            </div>
+          </div>
+        </div>
+
+    <!-- <div class="contact-item">
+          <span class="contact-item-icon">📱</span>
+          <div>
+            <span class="contact-item-label">Phone / WhatsApp</span>
+            <div class="contact-item-value">+91 XXXXX XXXXX</div>
+          </div> 
+        </div> -->
+
+        <div class="contact-item">
+          <span class="contact-item-icon">💼</span>
+          <div>
+            <span class="contact-item-label">LinkedIn</span>
+            <div class="contact-item-value">
+              <a href="https://linkedin.com/in/yourprofile" target="_blank">https://www.linkedin.com/in/kkp-hub/</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <span class="contact-item-icon">📸</span>
+          <div>
+            <span class="contact-item-label">Instagram</span>
+            <div class="contact-item-value">
+              <a href="https://instagram.com/yourhandle" target="_blank">@neo_dock</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <span class="contact-item-icon">📍</span>
+          <div>
+            <span class="contact-item-label">Location</span>
+            <div class="contact-item-value"> Tamil Nadu, India</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Explorer</div>
+  <div class="footer-tag">Collect Moments, Not Things</div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#travels">Travels</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 · Crafted with wanderlust · Bangladesh ✨✦</div>
+</footer>
+
+<script>
+  // Intersection Observer for scroll reveals
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--gold)' : '';
+    });
+  });
+</script>
+</body>
+</html>
